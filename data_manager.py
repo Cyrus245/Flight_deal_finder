@@ -14,8 +14,9 @@ class DataManager:
 
     def get_destination_data(self):
         """this method getting data from Google sheet using sheet api"""
-        result = requests.get(self.get_url).json()[
+        result = requests.get(f'{self.get_url}/prices').json()[
             'prices']
+
         return result
 
     def update_destination_code(self, r_id, msg):
@@ -25,5 +26,10 @@ class DataManager:
                 "iataCode": msg
             }
         }
-        result = requests.put(
-            f'{self.get_url}/{r_id}', json=params)
+        result = requests.put(f'{self.get_url}/prices/{r_id}', json=params)
+
+    def get_customers_email(self):
+        """This method will get the users data from Google sheet"""
+        result = requests.get(f"{self.get_url}/users").json()
+        users = result['users']
+        return users
